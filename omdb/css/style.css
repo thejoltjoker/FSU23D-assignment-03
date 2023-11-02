@@ -1,0 +1,7 @@
+body {
+  background: var(--bs-body-bg);
+}
+
+.search-result img {
+  max-height: 8rem;
+}
