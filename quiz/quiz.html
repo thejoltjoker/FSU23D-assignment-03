@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./dist/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Young+Serif&family=Nunito:wght@200..900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body class="bg-amber-100 select-none">
+  <div class="p-2 md:p-4">
+    <div class="container max-w-screen-sm 2xl:max-w-screen-lg  mx-auto">
+      <div
+        class="text-center bg-white border-4 border-zinc-800 rounded-xl overflow-hidden p-2 sm:p-3 md:p-5 drop-shadow-card">
+        <h1 class="font-title text-2xl md:text-4xl font-black md:mb-3">
+          En <span class="line-through decoration-4 decoration-red-600 text-stone-400">ska</span> är på väg bort
+        </h1>
+        <p class="text-lg">Klicka på den rödlistade arten</p>
+      </div>
+      <div id="quiz">
+        <div id="quiz-board" class="grid grid-cols-2 gap-2 md:gap-4">
+          <div class="flex items-center justify-center col-span-full py-48">
+            <button id="start-quiz"
+              class="transition bg-teal-300  hover:bg-red-400 border-4 border-zinc-800 rounded-2xl overflow-hidden cursor-pointer p-4 md:p-6 drop-shadow-card text-zinc-800 group-hover:text-red-950 text-xl md:text-4xl font-extrabold md:font-black flex-grow md:flex-grow-0">
+              Starta Quiz
+            </button>
+          </div>
+          <!-- <div
+            class="quiz-card group w-full h-30 transition bg-white  hover:bg-red-400 border-4 border-zinc-800 rounded-2xl overflow-hidden cursor-pointer p-2 sm:p-3 md:p-5 drop-shadow-card">
+
+
+
+            <img class="aspect-card object-cover border-4 border-zinc-800 rounded-lg" alt="" srcset="
+          https://static.inaturalist.org/photos/60548654/small.png 240w,
+          https://static.inaturalist.org/photos/60548654/medium.png 500w,
+          https://static.inaturalist.org/photos/60548654/large.png 1000w" sizes="(max-width: 500px) 60vw,
+          100vw">
+
+
+            <div class="w-full text-center pt-2 sm:pt-3 md:pt-5">
+              <h2 class="text-zinc-800 group-hover:text-red-950 text-xl md:text-4xl font-extrabold md:font-black">
+                Pilgrimsfalk
+              </h2>
+              <p class="text-stone-500 group-hover:text-red-800 tracking-wider">Falco Peregrinus</p>
+            </div>
+
+
+          </div>
+          <div
+            class="quiz-card group w-full h-30 transition bg-white  hover:bg-red-400 border-4 border-zinc-800 rounded-2xl overflow-hidden cursor-pointer p-2 sm:p-3 md:p-5 drop-shadow-card">
+
+            <img class="aspect-card object-cover border-4 border-zinc-800 rounded-lg" src="./public/img/rodrav.jpg"
+              alt="" />
+            <div class="w-full text-center pt-2 sm:pt-3 md:pt-5">
+              <h2 class="text-zinc-800 group-hover:text-red-950 text-xl md:text-4xl font-extrabold md:font-black">
+                Rödräv
+              </h2>
+              <p class="text-stone-500 group-hover:text-red-800 tracking-wider">Vulpes Vulpes</p>
+            </div>
+
+
+          </div>
+          <div
+            class="quiz-card group w-full h-30 transition bg-white  hover:bg-red-400 border-4 border-zinc-800 rounded-2xl overflow-hidden cursor-pointer p-2 sm:p-3 md:p-5 drop-shadow-card">
+
+            <img class="aspect-card object-cover border-4 border-zinc-800 rounded-lg"
+              src="./public/img/pilgrimsfalk.jpg" alt="" />
+            <div class="w-full text-center pt-2 sm:pt-3 md:pt-5">
+              <h2 class="text-zinc-800 group-hover:text-red-950 text-xl md:text-4xl font-extrabold md:font-black">
+                Pilgrimsfalk
+              </h2>
+              <p class="text-stone-500 group-hover:text-red-800 tracking-wider">Falco Peregrinus</p>
+            </div>
+
+
+          </div>
+          <div
+            class="quiz-card group w-full h-30 transition bg-white  hover:bg-red-400 border-4 border-zinc-800 rounded-2xl overflow-hidden cursor-pointer p-2 sm:p-3 md:p-5 drop-shadow-card">
+
+            <img class="aspect-card object-cover border-4 border-zinc-800 rounded-lg"
+              src="./public/img/pilgrimsfalk.jpg" alt="" />
+            <div class="w-full text-center pt-2 sm:pt-3 md:pt-5">
+              <h2 class="text-zinc-800 group-hover:text-red-950 text-xl md:text-4xl font-extrabold md:font-black">
+                Pilgrimsfalk
+              </h2>
+              <p class="text-stone-500 group-hover:text-red-800 tracking-wider">Falco Peregrinus</p>
+            </div>
+
+
+          </div> -->
+
+
+
+
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./src/js/main.js"></script>
+</body>
+
+</html>
