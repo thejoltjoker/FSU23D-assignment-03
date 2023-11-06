@@ -1,6 +1,10 @@
+import { shuffleArray } from "../shared/utility.js";
+
 export class QuizRound {
   constructor(cards, callback) {
     this.cards = cards;
+    // Shuffle cards
+    shuffleArray(this.cards);
     this.result = null;
     this.callback = callback;
     // TODO Randomize card order

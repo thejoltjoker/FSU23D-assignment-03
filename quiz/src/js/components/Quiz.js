@@ -1,6 +1,6 @@
 import { randomListItem } from "../shared/utility.js";
 import { QuizCard } from "./QuizCard.js";
-import { Species } from "../Species.js";
+import { Species } from "../shared/Species.js";
 import { QuizRound } from "./QuizRound.js";
 import QuizProgress from "./QuizProgress.js";
 
@@ -25,7 +25,7 @@ export class Quiz {
     this.startRound();
   }
 
-  initRound() {
+  async initRound() {
     const species = [];
     const cards = [];
 
@@ -34,7 +34,7 @@ export class Quiz {
       let newSpecies;
       // Pick the correct answer first
       if (i == 0) {
-        const randomSpecies = randomListItem(this.correct);
+        const [index, randomSpecies] = randomListItem(this.correct);
         newSpecies = new Species(
           randomSpecies.id,
           randomSpecies.swedishname,
@@ -43,8 +43,10 @@ export class Quiz {
           true,
           []
         );
+        // Remove species from list
+        this.correct.splice(index, 1);
       } else {
-        const randomSpecies = randomListItem(this.incorrect);
+        const [index, randomSpecies] = randomListItem(this.incorrect);
         newSpecies = new Species(
           randomSpecies.id,
           randomSpecies.swedishname,
@@ -53,6 +55,8 @@ export class Quiz {
           false,
           []
         );
+        // Remove species from list
+        this.incorrect.splice(index, 1);
       }
 
       // Add to list of species
@@ -61,30 +65,14 @@ export class Quiz {
       // Create cards for round
       const card = new QuizCard(newSpecies);
       cards.push(card);
-
-      // Get images from iNaturalist
-      //   const inat = new INaturalistClient();
-      //   const inatId = await inat.getIdFromScientificName(
-      //     newSpecies.scientificName
-      //   );
-      //   newSpecies.iNaturlistId = inatId;
-      // Get taxa
-      //   const inatTaxa = await inat.getTaxa([newSpecies.iNaturlistId]);
-      //   newSpecies.photos = inatTaxa.results[0].taxon_photos.map(
-      //     (item) => item.photo
-      //   );
-      // Set photo
-      //   card.setPhoto = newSpecies.photos[0];
-      // }
-      // console.log(species);
     }
+
     const round = new QuizRound(cards, (result) => {
       if (result) {
         this.currentScore++;
       } else {
         this.currentHearts--;
       }
-
       this.moveToNextRound();
     });
     return round;
@@ -104,12 +92,13 @@ export class Quiz {
     }
   }
 
-  startRound() {
-    const round = this.initRound();
+  async startRound() {
+    const round = await this.initRound();
     this.quizProgress.updateTextProgress(this.currentRound, this.rounds);
     this.quizProgress.updateProgressBar(this.currentRound, this.rounds);
     this.quizProgress.updateHearts(this.currentHearts, this.totalHearts);
     this.quizBoard.innerHTML = "";
+
     for (const card of round.cards) {
       this.quizBoard.append(card.element);
     }

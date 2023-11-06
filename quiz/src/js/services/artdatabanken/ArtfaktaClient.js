@@ -1,3 +1,4 @@
+// TODO use shared api client
 export class ArtdataClient {
   baseUrl = "https://api.artdatabanken.se/information/v1/speciesdataservice/v1";
   endpoints = {

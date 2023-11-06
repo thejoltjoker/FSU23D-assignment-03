@@ -1,3 +1,4 @@
+// TODO use shared api client
 export default class TaxonomyClient {
   endpoints = {
     definitions: "https://api.artdatabanken.se/taxonlistservice/v1/definitions",

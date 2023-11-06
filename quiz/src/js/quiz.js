@@ -44,7 +44,7 @@ const getRedlistedAnimals = async () => {
   }
 };
 
-const getCommonAnimals = async () => {
+const getCommonAnimals = async (redlistAnimals) => {
   // List id for the "Typiska arter" list is 1
 
   const listId = 1;
@@ -79,8 +79,6 @@ const getCommonAnimals = async () => {
   }
 };
 
-const redlistAnimals = await getRedlistedAnimals();
-const commonAnimals = await getCommonAnimals();
 const createButton = (id, text, color) => {
   const button = document.createElement("button");
   button.id = id;
@@ -88,10 +86,31 @@ const createButton = (id, text, color) => {
   button.innerText = text;
   return button;
 };
-
+const showLoadingScreen = () => {
+  const element = document.createElement("h2");
+  element.innerText = "Laddar...";
+  const quizBoard = document.querySelector("#quiz-board");
+  quizBoard.innerHTML = element.outerHTML;
+};
 // document.body.prepend(createButton("test-btn", "Testknapp", "teal"));
 const startQuizButton = document.querySelector("#start-quiz");
-startQuizButton.onclick = (e) => {
-  const quiz = new Quiz(10, commonAnimals, redlistAnimals);
-  quiz.start();
+let loading = false;
+startQuizButton.onclick = async (e) => {
+  if (!loading) {
+    // showLoadingScreen();
+    const button = e.target;
+    loading = true;
+    button.innerText = "Laddar...";
+
+    button.classList.remove("bg-teal-300");
+    button.classList.remove("hover:bg-red-400");
+    button.classList.add("bg-stone-300");
+    button.classList.add("hover:bg-stone-400");
+    button.classList.add("cursor-auto");
+    const redlistAnimals = await getRedlistedAnimals();
+    const commonAnimals = await getCommonAnimals(redlistAnimals);
+    const quiz = new Quiz(10, commonAnimals, redlistAnimals);
+    loading = false;
+    quiz.start();
+  }
 };
