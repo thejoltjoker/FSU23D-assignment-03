@@ -12,10 +12,11 @@ export class QuizRound {
       card.element.onclick = () => {
         if (card.species.isRedlisted) {
           this.result = true;
+          // Send result to callback function
         } else {
           this.result = false;
+          card.setInactive();
         }
-        // Send result to callback function
         this.callback(this.result);
       };
     }
