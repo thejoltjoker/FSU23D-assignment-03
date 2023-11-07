@@ -1,6 +1,6 @@
 import { toTitleCase } from "../shared/utility.js";
 
-export class QuizCard {
+export default class QuizCard {
   /**
    * Creates an instance of QuizCard.
    * @param {Species} species
@@ -53,14 +53,14 @@ export class QuizCard {
     this.element.prepend(this.photoContainer);
 
     // Set photos
-    this.species
-      .getPhotos()
-      .then(() => {
-        this.setPhoto(this.species.photos[0]);
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
+    // this.species
+    //   .getPhotos()
+    //   .then(() => {
+    //     this.setPhoto(this.species.photos[0]);
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error:", error);
+    //   });
   }
 
   /**

@@ -1,6 +1,6 @@
 import INaturalistClient from "../services/iNaturalist/INaturalistClient.js";
 
-export class Species {
+export default class Species {
   /**
    * Creates an instance of Species.
    * @param {Number} taxonId
@@ -17,7 +17,7 @@ export class Species {
     scientificName,
     iNaturlistId,
     isRedlisted = false,
-    photos = []
+    photos = [],
   ) {
     this.taxonId = taxonId;
     this.swedishName = swedishName;

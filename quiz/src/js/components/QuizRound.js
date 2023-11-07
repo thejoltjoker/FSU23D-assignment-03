@@ -1,6 +1,6 @@
 import { shuffleArray } from "../shared/utility.js";
 
-export class QuizRound {
+export default class QuizRound {
   constructor(cards, callback) {
     this.cards = cards;
     // Shuffle cards

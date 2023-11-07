@@ -35,7 +35,7 @@ const getRedlistedAnimals = async () => {
     const animals = filterDataArray(
       allSpecies.natureConservationListTaxa[0].taxonInformation,
       allAnimalIds["taxonIds"],
-      "id"
+      "id",
     );
     return animals;
     // console.log(animals);
@@ -69,7 +69,7 @@ const getCommonAnimals = async (redlistAnimals) => {
     const animals = filterDataArray(
       allSpecies.natureConservationListTaxa[0].taxonInformation,
       allAnimalIds["taxonIds"],
-      "id"
+      "id",
     );
     const commonAnimals = removeRedlistedFromCommon(animals, redlistAnimals);
     return commonAnimals;

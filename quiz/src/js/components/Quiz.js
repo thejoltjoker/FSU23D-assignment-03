@@ -1,8 +1,9 @@
 import { randomListItem } from "../shared/utility.js";
-import { QuizCard } from "./QuizCard.js";
-import { Species } from "../shared/Species.js";
-import { QuizRound } from "./QuizRound.js";
+import QuizCard from "./QuizCard.js";
+import Species from "../shared/Species.js";
+import QuizRound from "./QuizRound.js";
 import QuizProgress from "./QuizProgress.js";
+import INaturalistClient from "../services/iNaturalist/INaturalistClient.js";
 // TODO add information about the correct answer, implement QuizInfoCard
 // TODO Gray out wrong answer
 // TODO Add play again button
@@ -132,46 +133,47 @@ export class Quiz {
   }
 
   async initRound() {
-    const species = [];
+    const allSpecies = [];
     const cards = [];
 
     // Pick 1 correct answer and 3 incorrect answers
     for (let i = 0; i < 4; ++i) {
       let newSpecies;
+      let index;
+      let randomSpecies;
       // Pick the correct answer first
       if (i == 0) {
-        const [index, randomSpecies] = randomListItem(this.correct);
-        newSpecies = new Species(
-          randomSpecies.id,
-          randomSpecies.swedishname,
-          randomSpecies.scientificname,
-          null,
-          true,
-          [],
-        );
+        [index, randomSpecies] = randomListItem(this.correct);
+        randomSpecies.isRedlisted = true;
         // Remove species from list
         this.correct.splice(index, 1);
       } else {
-        const [index, randomSpecies] = randomListItem(this.incorrect);
-        newSpecies = new Species(
-          randomSpecies.id,
-          randomSpecies.swedishname,
-          randomSpecies.scientificname,
-          null,
-          false,
-          [],
-        );
+        [index, randomSpecies] = randomListItem(this.incorrect);
+        randomSpecies.isRedlisted = false;
         // Remove species from list
         this.incorrect.splice(index, 1);
       }
 
+      // Create new Species object
+      newSpecies = new Species(
+        randomSpecies.id,
+        randomSpecies.swedishname,
+        randomSpecies.scientificname,
+        null,
+        randomSpecies.isRedlisted,
+        [],
+      );
+
       // Add to list of species
-      species.push(newSpecies);
+      allSpecies.push(newSpecies);
 
       // Create cards for round
       const card = new QuizCard(newSpecies);
       cards.push(card);
     }
+
+    // Map each species instance to a promise that calls getInaturalistId()
+    this.getInatIdsAndPhotos(allSpecies, cards);
 
     const round = new QuizRound(cards, (result) => {
       if (result) {
@@ -186,6 +188,40 @@ export class Quiz {
       }
     });
     return round;
+  }
+
+  getInatIdsAndPhotos(allSpecies, cards) {
+    const promises = allSpecies.map((spec) => spec.getInaturalistId());
+
+    // Use Promise.all() to run them concurrently
+    Promise.all(promises)
+      .then(async (inaturalistIds) => {
+        // Create a new INaturalistClient instance
+        const inat = new INaturalistClient();
+
+        // Use the retrieved inaturalistIds to fetch taxonomic information
+        const taxa = await inat.getTaxa(inaturalistIds);
+
+        // Iterate through the results
+        for (const t of taxa.results) {
+          // Find the correct card object based on the inaturalist id of the species
+          const card = cards.find((obj) => {
+            return obj.species.iNaturlistId == t.id;
+          });
+          const species = card.species;
+
+          // Populate the species' photos from the retrieved taxon photos
+          species.photos = t.taxon_photos.map((item) => item.photo);
+
+          // Set a random photo for the species
+          card.setPhoto(randomListItem(species.photos)[1]);
+        }
+      })
+      .catch((error) => {
+        // Handle errors if any of the promises are rejected
+        console.error("Error:", error);
+        throw new Error(error);
+      });
   }
 
   moveToNextRound() {
