@@ -39,18 +39,20 @@ export class QuizCard {
 
     this.element.className =
       "quiz-card group w-full h-30 transition bg-white hover:bg-red-400 border-4 border-zinc-800 rounded-2xl overflow-hidden cursor-pointer p-2 sm:p-3 md:p-5 drop-shadow-card";
-    this.element.innerHTML = `
-    <div class="w-full text-center pt-2 sm:pt-3 md:pt-5">
-      <h2 class="text-zinc-800 group-hover:text-red-950 text-lg sm:text-xl lg:text-2xl 2xl:text-3xl font-extrabold md:font-black">
+
+    this.textContainer = document.createElement("div");
+    this.textContainer.classList = "w-full text-center pt-2 sm:pt-3 md:pt-5";
+    this.textContainer.innerHTML = `<h2 class="text-zinc-800 group-hover:text-red-950 text-lg sm:text-xl lg:text-2xl 2xl:text-3xl font-extrabold md:font-black">
         ${this.swedishName}
       </h2>
-      <p class="text-stone-500 group-hover:text-red-800 tracking-wider">${this.scientificName}</p>
-    </div>
+      <p class="text-stone-500 group-hover:text-red-800 tracking-wider">
+        ${this.scientificName}
+      </p>
     `;
+    this.element.append(this.textContainer);
     this.element.prepend(this.photoContainer);
 
     // Set photos
-
     this.species
       .getPhotos()
       .then(() => {
@@ -67,8 +69,20 @@ export class QuizCard {
   setPhoto(photo) {
     this.photoContainer.innerHTML = "";
     this.img.src = photo.small_url;
-    this.img.src = photo.medium_url;
-    this.img.src = photo.large_url;
+    // this.img.src = photo.medium_url;
+    // this.img.src = photo.large_url;
     this.photoContainer.append(this.img);
+  }
+
+  setInactive() {
+    this.img.classList.add("grayscale");
+    this.element.className =
+      "quiz-card group w-full h-30 transition bg-stone-300 border-4 border-zinc-800 rounded-2xl overflow-hidden cursor-auto p-2 sm:p-3 md:p-5 drop-shadow-card";
+    this.textContainer.innerHTML = `
+      <h2 class="text-zinc-600 text-lg sm:text-xl lg:text-2xl 2xl:text-3xl font-extrabold md:font-black">
+        ${this.swedishName}
+      </h2>
+      <p class="text-stone-500 tracking-wider">${this.scientificName}</p>
+    `;
   }
 }
