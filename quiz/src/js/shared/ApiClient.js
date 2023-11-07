@@ -23,6 +23,7 @@ export default class ApiClient {
       return data;
     } catch (error) {
       console.error(`Error: ${error.message}`);
+      throw new Error(error);
     }
   }
 }

@@ -1,11 +1,14 @@
+import ApiClient from "../../shared/ApiClient.js";
+
 // TODO use shared api client
-export default class TaxonomyClient {
+export default class TaxonomyClient extends ApiClient {
   endpoints = {
     definitions: "https://api.artdatabanken.se/taxonlistservice/v1/definitions",
     taxa: "https://api.artdatabanken.se/taxonlistservice/v1/taxa",
     childIds: "https://api.artdatabanken.se/taxonservice/v1/taxa/{id}/childids",
   };
   constructor(subscriptionKey) {
+    super();
     this.headers = {
       Accept: "*/*",
       "User-Agent": "Animal Quiz",
@@ -15,25 +18,6 @@ export default class TaxonomyClient {
     };
   }
 
-  async #request(method = "GET", endpoint, body) {
-    try {
-      const response = await fetch(endpoint, {
-        method: method,
-        body: body,
-        headers: this.headers,
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(`Error: ${error.message}`);
-    }
-  }
-
   async getChildIds(taxonId, useMainChildren = true) {
     // Documentation:
     // https://api-portal.artdatabanken.se/api-details#api=taxonservice&operation=Taxon_GetChildIds
@@ -41,15 +25,16 @@ export default class TaxonomyClient {
     endpoint.searchParams.append("useMainChildren", useMainChildren);
 
     try {
-      return await this.#request("GET", endpoint.href);
+      return await this.request("GET", endpoint.href);
     } catch (error) {
       console.error(error);
+      throw new Error(error);
     }
   }
 
   async getTaxonList(
     conservationListId,
-    outputFields = ["id", "scientificname", "swedishname", "englishname"]
+    outputFields = ["id", "scientificname", "swedishname", "englishname"],
   ) {
     let body = JSON.stringify({
       conservationListIds: [conservationListId],
@@ -57,9 +42,10 @@ export default class TaxonomyClient {
     });
     let endpoint = this.endpoints.taxa;
     try {
-      return await this.#request("POST", endpoint, body);
+      return await this.request("POST", endpoint, body);
     } catch (error) {
       console.error(error);
+      throw new Error(error);
     }
   }
 }
