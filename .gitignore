@@ -131,3 +131,11 @@ dist
 .pnp.*
 omdb/js/key.js
 quiz/env.js
+quiz/scrap.html
+quiz/public/img/falk.jpg
+quiz/public/img/insekt.jpg
+quiz/public/img/katt.jpg
+quiz/public/img/pilgrimsfalk.jpg
+quiz/public/img/rodrav.jpg
+.vscode/settings.json
+quiz/.vscode/settings.json
