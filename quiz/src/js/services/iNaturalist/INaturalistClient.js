@@ -28,7 +28,7 @@ export default class INaturalistClient extends ApiClient {
     try {
       const response = await this.request(
         "GET",
-        "https://corsproxy.io/?" + url.href
+        "https://corsproxy.io/?" + url.href,
       );
       return response;
     } catch (error) {
@@ -45,7 +45,7 @@ export default class INaturalistClient extends ApiClient {
   async getTaxa(ids) {
     const url = new URL(
       "https://corsproxy.io/?" +
-        `${this.endpoints.taxa}/${encodeURIComponent(ids.join(","))}`
+        `${this.endpoints.taxa}/${encodeURIComponent(ids.join(","))}`,
     );
 
     try {
