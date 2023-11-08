@@ -7,11 +7,10 @@ import {
   removeRedlistedFromCommon,
 } from "./shared/utility.js";
 import { VERTEBRATES_IDS } from "../../mockData/vertebrataIds.js";
-import { Quiz } from "./components/Quiz.js";
-
-// Get common species
+import Quiz from "./components/Quiz.js";
+import QuizInfoCard from "./components/QuizInfoCard.js";
+// TODO Make results component
 // Get redlisted species
-
 const getRedlistedAnimals = async () => {
   // List id for the "Rödlistade arter" list is 227
   const listId = 227;
@@ -43,7 +42,7 @@ const getRedlistedAnimals = async () => {
     console.error("Error:", error);
   }
 };
-
+// Get common species
 const getCommonAnimals = async (redlistAnimals) => {
   // List id for the "Typiska arter" list is 1
 
@@ -114,3 +113,6 @@ startQuizButton.onclick = async (e) => {
     quiz.start();
   }
 };
+
+const quizBoard = document.querySelector("#quiz-board");
+quizBoard.append(new QuizInfoCard().element);

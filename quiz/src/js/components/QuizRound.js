@@ -7,14 +7,13 @@ export default class QuizRound {
     shuffleArray(this.cards);
     this.result = null;
     this.callback = callback;
-    // TODO Randomize card order
     for (const card of this.cards) {
       card.element.onclick = () => {
         if (card.species.isRedlisted) {
-          this.result = true;
+          this.result = [true, card];
           // Send result to callback function
         } else {
-          this.result = false;
+          this.result = [false, card];
           card.setInactive();
         }
         this.callback(this.result);

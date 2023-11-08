@@ -69,7 +69,7 @@ export default class QuizCard {
   setPhoto(photo) {
     this.photoContainer.innerHTML = "";
     this.img.src = photo.small_url;
-    // this.img.src = photo.medium_url;
+    this.img.src = photo.medium_url;
     // this.img.src = photo.large_url;
     this.photoContainer.append(this.img);
   }
