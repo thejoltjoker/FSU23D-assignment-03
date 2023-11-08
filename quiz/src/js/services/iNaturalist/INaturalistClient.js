@@ -1,25 +1,33 @@
-import ApiClient from "../../shared/ApiClient.js";
-
 /**
- *
+ * Class representing a client for the iNaturalist API.
+ * Extends the base ApiClient class.
  *
  * @export
  * @class INaturalistClient
  * @extends {ApiClient}
  */
+import ApiClient from "../../shared/ApiClient.js";
+
 export default class INaturalistClient extends ApiClient {
-  endpoints = {
-    taxa: "https://api.inaturalist.org/v1/taxa",
-  };
   /**
-   *
-   *
-   * @param {*} params
-   * @return {*}
-   * @memberof INaturalistClient
+   * Initializes a new INaturalistClient instance.
+   * @param {Object} params - Configuration parameters for the iNaturalist client.
+   */
+  constructor(params) {
+    super();
+
+    // Define the default endpoint for the iNaturalist API.
+    this.endpoints = {
+      taxa: "https://api.inaturalist.org/v1/taxa",
+    };
+  }
+
+  /**
+   * Search for taxa using specified parameters.
+   * @param {Object} params - The search parameters for taxa.
+   * @returns {Promise} A Promise that resolves with the response from the API.
    */
   async searchTaxa(params) {
-    // console.log(`Search iNaturalist for ${scientificName}`);
     const searchParams = new URLSearchParams(params);
 
     const url = new URL(this.endpoints.taxa);
@@ -35,12 +43,11 @@ export default class INaturalistClient extends ApiClient {
       console.error(error);
     }
   }
+
   /**
-   * Get taxa information for given ids
-   *
-   * @param {Array} ids - The iNaturalist ids to get taxa for
-   * @return {Object} Response data from iNaturalist
-   * @memberof INaturalistClient
+   * Get taxa information for a given list of iNaturalist IDs.
+   * @param {Array} ids - The iNaturalist IDs to retrieve taxa for.
+   * @returns {Promise} A Promise that resolves with the response from the API.
    */
   async getTaxa(ids) {
     const url = new URL(
@@ -56,6 +63,11 @@ export default class INaturalistClient extends ApiClient {
     }
   }
 
+  /**
+   * Get the iNaturalist ID for a taxon based on its scientific name.
+   * @param {string} scientificName - The scientific name of the taxon.
+   * @returns {number|null} The iNaturalist ID of the taxon, or null if not found.
+   */
   async getIdFromScientificName(scientificName) {
     const params = {
       q: scientificName,
@@ -78,8 +90,3 @@ export default class INaturalistClient extends ApiClient {
     }
   }
 }
-
-// Example
-// const inat = new INaturalistClient();
-// const taxa = await inat.getIdFromScientificName("Turdus Merula");
-// console.log(taxa);

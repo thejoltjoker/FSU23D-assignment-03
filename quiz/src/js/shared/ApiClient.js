@@ -1,4 +1,10 @@
+/**
+ * Class representing a generic API client for making HTTP requests.
+ */
 export default class ApiClient {
+  /**
+   * Initializes a new ApiClient instance with default headers.
+   */
   constructor() {
     this.headers = {
       Accept: "*/*",
@@ -7,6 +13,14 @@ export default class ApiClient {
     };
   }
 
+  /**
+   * Send an HTTP request to the specified URL.
+   * @param {string} method - The HTTP request method (e.g., "GET", "POST").
+   * @param {string} url - The URL to send the request to.
+   * @param {string} body - The request body (if applicable).
+   * @returns {Promise} A Promise that resolves with the response data from the API.
+   * @throws {Error} Throws an error if the API request fails.
+   */
   async request(method, url, body) {
     try {
       const response = await fetch(url, {
