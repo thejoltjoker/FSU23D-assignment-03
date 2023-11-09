@@ -7,7 +7,6 @@ import INaturalistClient from "../services/iNaturalist/INaturalistClient.js";
 import QuizInfoCard from "./QuizInfoCard.js";
 // TODO Add play again button
 // TODO Replace start quiz button with species selection
-// TODO Remove possibility to click on disabled card
 export default class Quiz {
   constructor(rounds = 10, commonSpecies, redlistedSpecies) {
     this.rounds = rounds;
